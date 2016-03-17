@@ -1,0 +1,43 @@
+public class Car 
+{
+    private String license; //license number of car object
+    private int moves = 0; //number of times the car moved
+    
+    /**
+     * Creates a car object 
+     * @param license the license number
+     */
+    public Car(String license)
+    {
+        this.license = license;
+        
+    }
+    
+    
+    /**
+     * Gets license number of the car
+     * @return the license plate number
+     */
+    public String getLic()
+    {
+        return license;
+    }
+    
+    /**
+     * Gets the number of times the car moved
+     * @return the amount of times a car moves
+     */
+    public int getMoves()
+    {
+        return moves;
+    }
+   
+    /**
+     * Counts the amount of times a car has moved from the garage
+     */
+    public void numberOfMoves()
+    {
+        moves = moves + 1;
+    }
+  
+}
