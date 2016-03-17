@@ -1,0 +1,125 @@
+public class Garage 
+{
+   
+    private int count = 0;
+    private Car[] garage; //garage array of car objects
+
+    
+    /**
+     * Creates an array list garage with 10 elements
+     */
+    public Garage() 
+    {
+        garage = new Car[10];
+    }
+
+    /**
+     * Insert a car into the garage array
+     * @param license the license of the car arriving
+     */
+    public void arrive(String license) 
+    {
+        //if number of cars in garage are less than the garage length
+        //add car to garage array
+        if (count < garage.length) 
+        {
+            Car car = new Car(license); //create new car object
+            garage[count] = car;
+            count++;
+            
+        }
+    }
+
+    /**
+     * Gets car object
+     * @param license the license plate of car
+     * @return car
+     */
+    public Car getCar(String license)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (garage[i].getLic().equals(license))
+            {
+                return garage[i];
+            }
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Checks if car is in garage
+     * @param license the car license plate
+     * @return true if car is in garage or false if car is not in the garage
+     */
+    public boolean intoGarage(String license)
+    {
+        boolean in = false;
+        
+        for (int i = 0; i < count; i++)
+        {
+            //if garage element is equal to license plate
+            //set boolean to true
+            if (garage[i].getLic().equals(license)) 
+            {
+                in = true;
+            }
+        
+        }
+        return in; //if no car is found with the same license return flase
+    
+    }
+    
+    /**
+     * Checks if garage is full
+     * @return the max number of elements in a garage 
+     * is equal to the amount of elements counted
+     */
+    public boolean garageIsFull()
+    {
+        return count==garage.length;
+    }
+    
+    /**
+     * To remove a car from the array and insert it back
+     * @param depart the car departing
+     */
+    public void depart(String depart)
+    {
+        int index = 0;
+        boolean found = false;
+        Car[] temp2 = new Car[10];
+ 
+            //find the car departing and set index
+        for (int i = 0; i < count; i++) 
+        {
+            if (garage[i].getLic().equals(depart) ) 
+            {
+                found = true; //found the departing car
+                index = i;    //set index to i
+                break;        //exit out of loop
+            }
+            
+            
+        }
+        
+        if (found) //if departing car is found
+        {
+            //for the cars infront of the departing car, move out of array
+            //and count the amount of times moved
+            for (int i = 0; i < index; i++)
+            {  
+                garage[i].numberOfMoves(); //count 
+            }
+            System.arraycopy(garage, 0, temp2, 0, index);
+            
+            //move all the cars after the departing car to a new array 
+            //starting in the index of the departed car
+            System.arraycopy(garage, index + 1, temp2, index, (count - 1) - index );
+
+        }
+        garage = temp2; //set garage array to the new garage array
+        count--; //one less element in use
+    }
+}
