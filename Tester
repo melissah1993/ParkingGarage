@@ -1,0 +1,71 @@
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+
+/**
+ * I affirm that this program is entirely my own work and none of it is 
+ * the work of any other person.
+ */
+
+/**
+ *
+ * @author Melissa Hardware
+ */
+public class ParkingGarageTester 
+{
+    public static void main(String[] args) throws IOException
+    {
+       Garage garage = new Garage(); //create a empty garage object
+       Scanner parking = new Scanner(new File("garage.txt"));
+       PrintWriter out = new PrintWriter(new File("s.txt"));
+       
+       while (parking.hasNext())
+       {    
+           
+           String license = parking.next();
+           String status = parking.next();
+           
+           //create a car object
+           Car currentCar = new Car(license);
+           //if car is arriving
+           if (status.equals("ARRIVE"))
+           {
+               //if garage is not full
+               if(!garage.garageIsFull())
+               {
+               garage.arrive(license); //add to array
+               out.println(garage.getCar(license).getLic()+ " arrived");
+               }
+               //if garage is full
+               else 
+               {
+                   out.println(currentCar.getLic()
+                           + " can not enter. Garage is full.");
+               }
+           }
+           
+           //if car is departing
+           if (status.equals("DEPART"))
+           {
+               //if car is found in the garage
+               if (garage.intoGarage(license))
+               {                
+                out.println(garage.getCar(license).getLic() +
+                        " has departed and was moved " 
+                        + garage.getCar(license).getMoves() + " time(s)");   
+                garage.depart(license); //depart car
+                
+               }
+               else //if car is not found in the garage
+               {
+                   out.println(currentCar.getLic() + " is not in the garage.");
+               }
+               
+              
+           }
+       }
+       out.close(); //close file
+    }
+}
